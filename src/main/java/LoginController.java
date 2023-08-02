@@ -12,8 +12,7 @@ public class LoginController extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("login controller hit");
         resp.setStatus(200);
-        req.getSession().setMaxInactiveInterval(120);
-        req.getSession().setAttribute("user","userAvailable");
+        req.getSession().setAttribute("userId","454809-6701133-83-41119224-14-701032676");
         req.getRequestDispatcher("/").forward(req,resp);
     }
 }

@@ -12,9 +12,17 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("logout hit");
-        HttpSession session = req.getSession();
-        Cookie cookie =(Cookie) Arrays.stream(req.getCookies()).filter(cookie1 -> cookie1.getName().equals("JSESSIONID"));
-        cookie.setMaxAge(0);
-        session.invalidate();
+
+        Cookie[] cookies = req.getCookies();
+        for(Cookie c: cookies){
+            if(c.getName().equals("JSESSIONID")){
+                System.out.println("found jsessionid invalidating it ");
+                c.setMaxAge(0);
+            }
+        }
+        System.out.println(req.getSession().getId());
+        req.getSession().invalidate();
+        System.out.println(req.getSession().getId());
+        System.out.println("exiting logout controller");
     }
 }

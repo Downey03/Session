@@ -1,5 +1,7 @@
 import org.w3c.dom.ls.LSOutput;
 
+import javax.naming.Context;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,14 +16,16 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
         PrintWriter out= resp.getWriter();
         resp.setContentType("text/html");
         System.out.println("controller hit");
-        String str = "";
-        if(session!=null) System.out.println(session.getAttribute("user")+" "+session.getId());
 
-        if(session==null){
+        String str = "";
+
+        if(session!=null) System.out.println(session.getAttribute("userId")+" "+session.getId());
+
+        if(session.getAttribute("userId")==null){
 
 
         str = """
@@ -599,12 +603,7 @@ public class Controller extends HttpServlet {
                                     },
                                     method : "GET",
                                     Accept : "/*",
-                                    // body : JSON.stringify({
-                                    //     searchKeyword : `${searchKeyword}`
-                                    // })
                                 })
-                        
-                               
                                 if(response.status == 404){
                                     writeFunctions.writeIndexVideoNotFound(element)
                                 }else{
@@ -632,28 +631,8 @@ public class Controller extends HttpServlet {
                                     }),
                                     redirect:"follow"
                                 })
-                           \s
-                               \s
-                               \s
-                                if(response.status >= 200 && response.status <=299){
-                                   \s
-                                    window.location.reload()
-                               \s
-                        
-                                    // let data = await response.json();
-                                    // console.log(data)
-                                    // localStorage.setItem("jwtToken",data.modelMap.jwtToken);
-                                    // window.location.href= url+data.viewName
-                                    // window.location.href=url+"home"
-                                    // let x = window.location.pathname;
-                                    // let arr = x.split("/")
-                                    // window.location.href = window.location.origin+"/home.html";
-                        //            window.location.href = window.location.origin+"/"+arr[1]+`/home.html`
-                                }else{
-                                    let data = await response.text();
-                                    console.log(data)
-                                    writeFunctions.writeLoginException(data)
-                                }
+                                window.location.reload()
+                          
                             },
                             signup : async function(){
                                 let userName = document.getElementById("name").value;
@@ -804,19 +783,7 @@ public class Controller extends HttpServlet {
                                 console.log("reloaded")
                             	};
                             })();
-                            
-                            
-                            const laurl = "http://localhost:8091/";
-                            const tomcaturl = "http://localhost:8080/Youtube_Mimic_JS/";
-                            const url1 = "https://sound-groove-380715.de.r.appspot.com/";
-                            //const url = "https://youtubev1-dot-sound-groove-380715.de.r.appspot.com/";
-                            const url = "http://localhost:8080/"
-                            
-                            let jwtToken = localStorage.getItem("jwtToken")
-                            
-                            
-                            
-                            
+                            let url = "http://localhost:8080/"
                             </script>
                             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
                             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -828,46 +795,36 @@ public class Controller extends HttpServlet {
                                     height: fit-content;
                                     display: flex;
                                 }
-                                
-                                
-                                
                                 #hamburger-icon-home{
                                    margin-top: 20px;
                                 }
-                                
                                 .hamburger{
-                                   \s
                                     font-size: 24;
                                     background-color: rgb(219, 219, 219);
                                     padding: 10px;
                                     border-radius: 6px;
                                     border: 1px solid black;
                                 }
-                                
                                 .hamburger:hover{
                                     transition: 0.2s;
                                     color: azure;
                                     background-color: rgb(127,127,127);
                                     border: solid black 1px;
                                 }
-                                
                                 .left-container{
                                     text-align: center;
                                     min-width: 4%;
                                     background-color: red;
                                     border-right: 1px solid black;
                                 }
-                                
                                 #home-offcanvas{
                                     text-align: center;
                                     background-color: red;
                                     max-width: 20%;
                                 }
-                                
                                 .btn-close{
                                     border: 1px solid black;
                                 }
-                                
                                 .create-playlist-div{
                                     padding: 20px;
                                     border: solid 2px black;
@@ -876,14 +833,12 @@ public class Controller extends HttpServlet {
                                     font-weight: 600;
                                     margin-bottom: 20px;
                                 }
-                                
                                 .create-playlist-div~button{
                                     border-radius: 6px;
                                     width: 100%;
                                     margin-top: 10px;
                                     font-weight: 500;
                                 }
-                                
                                 .create-playlist-div~button:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -891,14 +846,12 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
                                 #create-playlist-input-field{
                                     margin: 5px;
                                     width: 100%;
                                     margin-bottom: 10px;
                                     border-radius: 6px;
                                 }
-                                
                                 #create-playlist-btn{
                                     border-radius: 6px;
                                     width: 100%;
@@ -906,7 +859,6 @@ public class Controller extends HttpServlet {
                                     margin-bottom: 70px;
                                     font-weight: 500;
                                 }
-                                
                                 #create-playlist-btn:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -914,9 +866,6 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
-                                
-                                
                                 #playlists{
                                     background-color: white;
                                     border-radius: 6px;
@@ -924,14 +873,12 @@ public class Controller extends HttpServlet {
                                     flex-direction: column;
                                     justify-content: center;
                                 }
-                                
                                 #playlists button{
                                     border-radius: 6px;
                                     display: block;
                                     font-weight: 500;
                                     margin: 10px;
                                 }
-                                
                                 #playlists button:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -939,37 +886,26 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
-                                
                                 #playlist-modal{
                                     position: absolute;
-                                    /* top: 10%; */
                                 }
-                                
                                 #modal-content>div{
                                    margin: 50px;
                                 }
-                                
                                 #modal-content>div>label{
                                     font-weight: 600;
                                 }
-                                
                                 #modal-content>div>button{
                                     width: 75%;
                                 }
-                                
-                                
-                                
                                 #select-playlist::-webkit-scrollbar {
                                     display: none;
                                   }
-                                
                                   #choose-playlist-btn{
                                     border-radius: 6px;
                                     font-weight: 500;
                                     margin: 5px;
                                   }
-                                
                                   #choose-playlist-btn:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -977,8 +913,6 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                   }
-                                
-                                
                                   #select-playlist{
                                     display: none;
                                     margin-top: 5px;
@@ -988,8 +922,6 @@ public class Controller extends HttpServlet {
                                     overflow: scroll;
                                     text-align: center;
                                 }
-                                
-                                
                                 #select-playlist div{
                                     display: block;
                                     width: 75%;
@@ -997,7 +929,6 @@ public class Controller extends HttpServlet {
                                     border-radius: 6px;
                                     font-weight: 400;
                                 }
-                                
                                 #select-playlist>div>button{
                                     display: inline-block;
                                     border: solid black 2px;
@@ -1006,7 +937,6 @@ public class Controller extends HttpServlet {
                                     border-radius: 6px;
                                     min-width:  95%;
                                 }
-                                
                                 .playlist{
                                     display: inline-block;
                                     border: solid black 2px;
@@ -1015,8 +945,6 @@ public class Controller extends HttpServlet {
                                     border-radius: 6px;
                                     min-width:  95%;
                                 }
-                                
-                                
                                 #select-playlist button:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -1024,90 +952,23 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
                                 #select-playlist button>div{
                                     height: 25px;
                                     display: flex;
                                     justify-content: center;
                                     gap: 5px;
                                 }
-                                
                                 #select-playlist button a{
                                     text-decoration: none;
                                     color: black;
                                     font-weight: 400;
                                 }
-                                
                                 #select-playlist button a:hover{
                                     color: white;
                                 }
-                                
                                 #select-playlist>div>svg:hover{
                                     cursor: pointer;
                                 }
-                                
-                                /* .search-video-in-playlist{
-                                    position: sticky;
-                                    background-color: white;
-                                    top: 0;
-                                    border-radius: 6px;
-                                    z-index: 1;
-                                    padding: 20px;
-                                    display: flex;
-                                    flex:1 2;
-                                    gap: 10px;
-                                }
-                                
-                                #delete-playlist-btn{
-                                    border-radius: 6px;
-                                    font-weight: 500;
-                                }
-                                
-                                #delete-playlist-btn:hover{
-                                    cursor: pointer;
-                                    transition: 0.2s;
-                                    color: azure;
-                                    background-color: rgb(127,127,127);
-                                    border: solid black 2px;
-                                }
-                                
-                                #playlist-video-search-input{
-                                    width: 70%;
-                                    border-radius: 4px;
-                                }
-                                
-                                #playlist-items{
-                                    display: flex;
-                                    flex-wrap: wrap;
-                                    justify-content: center;
-                                    gap: 25px;
-                                }
-                                
-                                #playlist-items>div{
-                                    display: flex;
-                                    width: 210px;
-                                }
-                                
-                                #playlist-items a{
-                                    border-radius: 6px;
-                                    max-width: 210px;
-                                    padding: 5px;
-                                    background-color: black;
-                                    box-shadow: 0px 0px 1px 1px rgb(74, 74,74);
-                                    text-decoration: none;
-                                    color: white;
-                                }
-                                
-                                #playlist-items a:hover{
-                                    color: rgb(79, 182, 255);
-                                }
-                                
-                                #playlist-items img{
-                                    display: block;
-                                    max-width: 200px;
-                                    min-width: 200px;
-                                } */
-                                
                                 .home-nav{
                                     padding: 20px 10px;
                                     display: flex;
@@ -1115,29 +976,24 @@ public class Controller extends HttpServlet {
                                     justify-content: space-around;
                                     width: 96vw;
                                 }
-                                
                                 #home-btn{
                                     color: white;
                                     position: relative;
                                     left: -130px;
                                     font-size: 22;
                                 }
-                                
                                 #home-btn:hover{
                                     cursor: pointer;
                                     color: rgb(127,127,127);
                                 }
-                                
                                 #home-video-search-input{
                                     border-radius: 6px;
                                     margin-right: 5px;
                                 }
-                                
                                 #home-search-btn{
                                     border-radius: 6px;
                                     font-weight: 500;
                                 }
-                                
                                 #home-search-btn:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -1145,12 +1001,10 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
                                 #logout-btn{
                                     border-radius: 6px;
                                     font-weight: 500;
                                 }
-                                
                                 #logout-btn:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -1158,11 +1012,9 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
                                 .home-main{
                                     padding: 20px;
                                 }
-                                
                                 .home-results{
                                     border-radius: 6px;
                                     padding: 20px;
@@ -1170,9 +1022,7 @@ public class Controller extends HttpServlet {
                                     height: fit-content;
                                     width: 100%;
                                     margin :auto;
-                                   \s
                                 }
-                                
                                 #home-results{
                                     display: flex;
                                     flex-flow: row wrap;
@@ -1180,7 +1030,6 @@ public class Controller extends HttpServlet {
                                     padding: 10px;
                                     width: 97%;
                                 }
-                                
                                 #home-results a{
                                     text-decoration: none;
                                     color: white;
@@ -1193,16 +1042,13 @@ public class Controller extends HttpServlet {
                                     min-width: 210px;
                                     max-width: 210px;
                                 }
-                                
                                 #home-results a:hover{
                                     color: rgb(64, 64, 221);
                                 }
-                                
                                 #home-results img{
                                     display: block;
                                     width: 200px;
                                 }
-                                
                                 #search-results-in-playlist{
                                     position: absolute;
                                     left: 18.5%;
@@ -1213,7 +1059,6 @@ public class Controller extends HttpServlet {
                                     border-radius: 6px;
                                     z-index: 5;
                                 }
-                                
                                 #search-results-in-playlist button{
                                     border-radius: 6px;
                                     display: block;
@@ -1222,7 +1067,6 @@ public class Controller extends HttpServlet {
                                     font-weight: 500;
                                     margin-bottom: 5px;
                                 }
-                                
                                 #search-results-in-playlist button:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -1230,7 +1074,6 @@ public class Controller extends HttpServlet {
                                     background-color: rgb(127,127,127);
                                     border: solid black 2px;
                                 }
-                                
                                 #modal-content{
                                     position: relative;
                                     left: -30%;
@@ -1239,11 +1082,9 @@ public class Controller extends HttpServlet {
                                 #playlist-items svg:hover{
                                     cursor: pointer;
                                 }
-                                
                                 #playlist-items i:hover{
                                     cursor: pointer;
                                 }
-                                
                                 #already-found-item{
                                     display: none;
                                     position: absolute;
@@ -1258,19 +1099,15 @@ public class Controller extends HttpServlet {
                                     margin: auto;
                                     opacity: 0;
                                 }
-                                
                                 #already-found-item:hover{
                                     cursor: default;
                                 }
-                                
-                                
                                 .animate{
                                     display: block !important;
                                     animation: display;
                                     opacity: 1;
                                     animation-duration:  3s;
                                 }
-                                
                                 @keyframes display {
                                     0%{
                                         opacity: 1;
@@ -1282,14 +1119,12 @@ public class Controller extends HttpServlet {
                                         opacity: 0;
                                     }
                                 }
-                                
                                 #confirm-delete-playlist{
                                     display: flex;
                                     flex-direction: column;
                                     justify-content: center;
                                     padding: 50px;
                                 }
-                                
                                 #confirm-playlist-delete button{
                                     border-radius: 6px;
                                     display: block;
@@ -1298,12 +1133,10 @@ public class Controller extends HttpServlet {
                                     font-weight: 500;
                                     margin-bottom: 5px;
                                 }
-                                
                                 #confirm-playlist-delete h3{
                                     margin-bottom: 20px;
                                     text-align: center;
                                 }
-                                
                                 #confirm-playlist-delete button:hover{
                                     cursor: pointer;
                                     transition: 0.2s;
@@ -1314,7 +1147,6 @@ public class Controller extends HttpServlet {
                             </style>
                         </head>
                         <body>
-                            <div id="test"></div>       \s
                             <div class="home-container">
                                 <!-- Left container| contains field to create playlist and List of playlist -->
                                 <div class="left-container">
@@ -1323,7 +1155,6 @@ public class Controller extends HttpServlet {
                                 <div class="offcanvas offcanvas-start" id="home-offcanvas" tabindex="-1" aria-labelledby="offcanvasTopLabel">
                                     <div class="offcanvas-header">
                                         <i class="fa-solid fa-bars hamburger"  id="hamburger-icon-offcanvas" type="button"  data-bs-toggle="offcanvas" data-bs-target="#home-offcanvas"  aria-label="Close"></i>
-                                       \s
                                     </div>
                                     <div class="offcanvas-body">
                                         <div class="create-playlist-div">
@@ -1332,10 +1163,8 @@ public class Controller extends HttpServlet {
                                             <button type="button" disabled onclick="requests.createPlayList();checkCreatePlayList()"  id="create-playlist-btn">Create</button>
                                         </div>
                                         <button data-bs-target="#playlist-modal" data-bs-toggle="modal">View PlayLists</button>
-                                       \s
                                     </div>
                                 </div>   <!--left container ends here-->
-                               \s
                                 <!-- modal to display playlist contents -->
                                 <div class="modal fade"  id="playlist-modal" tabindex="-1" aria-labelledby="playlist-model" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -1350,7 +1179,6 @@ public class Controller extends HttpServlet {
                                         </div>
                                     </div>
                                 </div>
-                                        
                                 <div class="modal fade"  id="confirm-playlist-delete" tabindex="-1" aria-hidden="true" aria-labelledby="confirm-delete" >
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -1389,43 +1217,29 @@ public class Controller extends HttpServlet {
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
                            <script>
-                            
                             let createPlayListInput = document.getElementById("create-playlist-input-field")
                             let createPlayListBtn = document.getElementById("create-playlist-btn")
-                            
                             let homeVideoSearchInput = document.getElementById("home-video-search-input")
                             let homeSearchBtn = document.getElementById("home-search-btn")
-                            
                             let playListVideoSearchInput = document.getElementById("playlist-video-search-input")
                             let searchResultsInPlayList = document.getElementById("search-results-in-playlist")
-                            
                             let playListModal = document.getElementById("playlist-modal")
                             let logout = document.getElementById("logout-btn")
-                            
-                            
                             let deletePlayListBtn = document.getElementById("delete-playlist-btn")
-                            
                             let playLists = [];
                             let currentPlayListName = "";
                             let currentPlayList= [];
                             let playListSearchResults = [];
-                            
-                            
                             function changeCurrentPlayList(playListName){
                                 currentPlayListName = playListName
                             }
-                            
                             function goHome(){
                                 window.location.href = `${url}`
                             }
-                            
                             createPlayListInput.addEventListener('keyup',checkCreatePlayList)
                             createPlayListBtn.addEventListener('click',function(){
                                 createPlayListInput.value = ""
                             })
-                            
-                            
-                            
                             function showPlayLists(){
                                 let playLists = document.getElementById("select-playlist")
                                 if(window.getComputedStyle(playLists).display == "block"){
@@ -1433,12 +1247,8 @@ public class Controller extends HttpServlet {
                                 }else{
                                     playLists.style.display = "block"
                                 }
-                               \s
-                               \s
                             }
-                            
                             async function checkAndAddItemToPlayList(videoTitle){
-                            
                                 console.log(videoTitle,currentPlayList)
                                 if(currentPlayList.length == 0 ) {
                                     requests.addItemToPlayList(videoTitle)
@@ -1453,33 +1263,17 @@ public class Controller extends HttpServlet {
                                      }
                                      requests.addItemToPlayList(videoTitle)
                                      return new Promise(resolve => resolve())
-                               \s
                                 }
-                                // if(currentPlayList[].includes(videoTitle)){
-                                //     console.log("saf")
-                                //     animateAlreadyFound()
-                                // }else{
-                                //     requests.addItemToPlayList(videoTitle)
-                                // }
                             }
-                            
                             function animateAlreadyFound(){
                                 let element = document.getElementById("already-found-item")
                                 element.setAttribute("class","animate")
                                 // element.classList.add("animate")
                                 setTimeout(removeAnimate,4000,element)
                             }
-                            
                             function removeAnimate(element){
-                               \s
                                 element.classList.remove("animate")  \s
                             }
-                            
-                            // function clearPlayListSearchInput(){
-                            //     playListVideoSearchInput.value = ""
-                            // }
-                            
-                            
                             function removeItem(videoTitle){
                                 for(x in currentPlayList){
                                     if(currentPlayList[x].videoTitle == videoTitle){
@@ -1489,7 +1283,6 @@ public class Controller extends HttpServlet {
                                 }
                                 return currentPlayList
                             }
-                            
                             function addItem(videoTitle){
                                 for(x in playListSearchResults){
                                     if(playListSearchResults[x].videoTitle == videoTitle){
@@ -1498,33 +1291,20 @@ public class Controller extends HttpServlet {
                                 }
                                 return currentPlayList
                             }
-                            
                             function checkCreatePlayList(){
                                 if(createPlayListInput.value.length >= 3 && !containsSamePlayList()) createPlayListBtn.disabled = false
                                 else createPlayListBtn.disabled = true
                             }
-                            
                             function containsSamePlayList(){
                                 if(playLists.includes(createPlayListInput.value.toString().trim())) return true;
                                 else return false
                             }
-                            
-                            // const url = "http://localhost:8080/Youtube_Mimic_JS/";
-                            // let jwtToken = localStorage.getItem("jwtToken")
-                            
                             homeVideoSearchInput.addEventListener('keyup',function(e){
                                 if(e.key == "Enter") requests.getHomeVideo()
                             })
-                            
-                            
-                            
                             const writeFunctions = {
-                            
                                 writeHomeVideo : async function(data,element){
-                            
                                     let writeData = "";
-                            
-                            
                                     let newFrag = document.createDocumentFragment()
                                     data.forEach(obj => {
                                         let aTag = document.createElement("a");
@@ -1536,24 +1316,6 @@ public class Controller extends HttpServlet {
                                         aTag.append(imgTag,text)
                                         newFrag.append(aTag)
                                     })
-                            //        console.log(newFrag)
-                            
-                            //        data.forEach(obj => {
-                            //            writeData=writeData+`
-                            //                <a href="${obj.videoLink}">
-                            //                    <img src="${obj.videoThumbnail}">
-                            //                    ${obj.videoTitle}
-                            //                </a>`})
-                            
-                            //        for(x in data){
-                            //            writeData = writeData+`
-                            //                <a href="${data[x].videoLink}">
-                            //                    <img src="${data[x].videoThumbnail}">
-                            //                    ${data[x].videoTitle}
-                            //                </a>`;
-                            //        }
-                            
-                            //        element.innerHTML = writeData;
                                     element.append(newFrag)
                                 },
                                 writeHomeVideoNotFound : function(element){
@@ -1561,24 +1323,16 @@ public class Controller extends HttpServlet {
                                     element.innerHTML = writeData
                                 },
                                 writePlayList : function(){
-                                   \s
                                     let writeDocument = document.getElementById("select-playlist")
                                     let writeData = "";
-                                   \s
                                     for(x in playLists) {
                                         writeData = writeData+`<div><button  class="playlists"  onclick="switchPlayList('${playLists[x]}')">${playLists[x]}</button> <i data-bs-toggle="modal" data-bs-target="#confirm-playlist-delete" onclick="changeCurrentPlayList('${playLists[x]}')" class="fa fa-circle-xmark delete-video"></i></div>`
-                                        // writeData = writeData+`<div><a  href="this.href+playlist.html"  onclick="location.href=this.href+'?playListName=${playLists[x]}'">${playLists[x]}</a> <i data-bs-toggle="modal" data-bs-target="#confirm-playlist-delete" onclick="changeCurrentPlayList('${playLists[x]}')" class="fa fa-circle-xmark delete-video"></i></div>`
-                                        // writeData = writeData+`<button><div><a href="${url}playlist.html">${playLists[x]}</a></p><i data-bs-toggle="modal" data-bs-target="#confirm-playlist-delete" onclick="changeCurrentPlayList('${playLists[x]}')" class="fa fa-circle-xmark delete-video"></i></div></button>`
                                     }
                                     writeDocument.innerHTML = writeData
                                 },
                                 writePlayListContent : function(playListName,data,element){
-                            
-                                   \s
                                     let writeData = `<input type="hidden" id=playListName value="${playListName}">`
-                                    // currentPlayList = [];
                                     for(x in data){
-                                        // currentPlayList.push(`${data[x].videoTitle}`)
                                         writeData = writeData+`<div>
                                             <a href="${data[x].videoLink}">
                                                 <div>
@@ -1590,42 +1344,24 @@ public class Controller extends HttpServlet {
                                             k delete-video"></i>
                                         </div>`
                                     }
-                            
                                     element.innerHTML = writeData;
                                 },
                                 writePlayListVideo : function(data){
-                            
                                     let writeDocument = document.getElementById("search-results-in-playlist")
-                            
                                     let writeData = '<h6 id="already-found-item">Video Already Found In PlayList</h6>';
-                            
-                                    ///need some cahnges
                                     for(x in data){
                                         writeData = writeData+`<div><button  onclick='clearPlayListSearchInput();checkAndAddItemToPlayList(\\"${data[x].videoTitle}\\")'  value="" >${data[x].videoTitle}</button></div>`
-                                        // writeData = writeData+"<div><button onclick=checkAndAddItemToPlayList(\\'"+`${data[x].videoTitle}`+"\\')  >"+`${data[x].videoTitle}`+"</button></div>"
-                            
                                     }
-                            
                                     writeDocument.innerHTML = writeData
-                                   \s
                                 }
-                            
-                            
                             }
-                            
                             function switchPlayList(playListName){
-                            
                                 let loc = window.location.pathname;
                                 let arr = loc.split('/')
-                            
                                window.location.href = window.location.origin+`/playlist?playListName=${playListName}`
-                            //    window.location.href = window.location.origin+"/"+arr[1]+`/playlist.html?playListName=${playListName}`
                             }
-                            
                             const requests = {
-                            
                                 getHomeVideo : async function(){
-                            
                                     let element = document.getElementById("home-results")
                                     element.innerHTML = "";
                                     let searchKeyword = homeVideoSearchInput.value
@@ -1636,13 +1372,7 @@ public class Controller extends HttpServlet {
                                             "Accept":"application/json"
                                         },
                                         method : "Get",
-                                       \s
-                                        // body : JSON.stringify({
-                                        //     "searchKeyword" : `${searchKeyword}`
-                                        // })
                                     })
-                            
-                                   \s
                                     if(response.status == 404){
                                         writeFunctions.writeHomeVideoNotFound(element)
                                     }else{
@@ -1654,15 +1384,10 @@ public class Controller extends HttpServlet {
                                         console.log(timetook,"ms")
                                     }
                                 },
-                            
                                 createPlayList : async function(){
-                            
                                     let playListName = createPlayListInput.value
-                            
                                     playLists.push(playListName)
-                            
                                     writeFunctions.writePlayList()
-                            
                                     let response = await fetch(`${url}playlist/create`,{
                                         headers: {
                                             contentType: 'application/json',
@@ -1674,37 +1399,23 @@ public class Controller extends HttpServlet {
                                             playListName : `${playListName}`
                                         })
                                     })
-                            
                                     let data = await response.json();
                                     playLists = data.model.playLists;
                                 },
                                 getPlayLists : async function(){
-                            
-                            
                                     let response = await fetch(`${url}playlist/get`,{
                                         headers: { "Content-Type": "application/json",
                                         "Authorization" : `Bearer ${jwtToken}`,
                                         "Accept":"application/json"
                                             },
                                         method : "GET",
-                                       \s
                                         }).then(res => res.json())
-                                   \s
                                         console.log(response)
-                                        // if(response.status == 401){
-                                        //     window.location.href = url+"page.html"
-                                        // }
-                                       \s
-                                    // playLists =await response.json()
                                     playLists = response.modelMap.playLists;
                                     writeFunctions.writePlayList()
-                                   \s
                                 },
-                            
                                 viewPlayList : async function(playListName){
-                            
                                     currentPlayListName = playListName;
-                            
                                     let element = document.getElementById("playlist-items")
                                     currentPlayList = [];
                                     writeFunctions.writePlayListContent(playListName,currentPlayList,element);
@@ -1713,28 +1424,19 @@ public class Controller extends HttpServlet {
                                         "Authorization" : `Bearer ${jwtToken}`,
                                         "Accept":"/*"
                                             },
-                                        // body : JSON.stringify({
-                                        //     playListName : `${playListName}`
-                                        // }),
                                         method : "GET",
                                         Accept:"/*",
                                     }).then(res => res.json())
-                            
                                     currentPlayList = response
                                     writeFunctions.writePlayListContent(playListName,response,element);
-                                   \s
                                 },
-                               \s
                                 deletePlayList :async function(){
-                            
                                     let playListName = currentPlayListName
-                                   \s
                                     console.log(playLists)
                                     let idx = playLists.indexOf(playListName)
                                     playLists.splice(idx,1)
                                     console.log(playLists)
                                     writeFunctions.writePlayList()
-                            
                                     let response = await fetch(`${url}playlist/delete`,{
                                         headers: { "Content-Type": "application/json",
                                         "Authorization" : `Bearer ${jwtToken}`,
@@ -1746,15 +1448,8 @@ public class Controller extends HttpServlet {
                                         method : "POST",
                                         Accept:"/*",
                                     }).then(res => res.json())
-                            
-                                    // playLists = response
-                            
-                                    // writeFunctions.writePlayList()
-                                   \s
                                 },
-                            
                                 getPlayListVideo : async function(){
-                            
                                     let searchKeyword = document.getElementById("playlist-video-search-input").value
                                     let response = await fetch(`${url}video/search`,{
                                         headers: { "Content-Type": "application/json",
@@ -1767,18 +1462,13 @@ public class Controller extends HttpServlet {
                                         method : "POST",
                                         Accept:"/*",
                                     }).then(res => res.json())
-                            
                                     playListSearchResults = response
-                            
                                     writeFunctions.writePlayListVideo(response)
                                 },
                                 addItemToPlayList : async function(videoTitle){
-                            
                                     let playListName = document.getElementById("playListName").value
                                     let element = document.getElementById("playlist-items")
-                            
                                     currentPlayList = addItem(videoTitle);
-                            
                                     writeFunctions.writePlayListContent(playListName,currentPlayList,element)
                                     await fetch(`${url}playlist/add`,{
                                         headers : {
@@ -1793,15 +1483,10 @@ public class Controller extends HttpServlet {
                                             "videoTitle" : `${videoTitle}`
                                         })
                                     }).then(res => res.json())
-                            
-                                    // currentPlayList = response  \s
-                                   \s
                                 },
                                 removeItemFromPlayList : async function(videoTitle){
-                            
                                     let playListName = document.getElementById("playListName").value
                                     let element = document.getElementById("playlist-items")
-                            
                                     currentPlayList = removeItem(videoTitle)
                                     writeFunctions.writePlayListContent(playListName,currentPlayList,element)
                                     let response = await fetch(`${url}playlist/remove`,{
@@ -1818,28 +1503,18 @@ public class Controller extends HttpServlet {
                                           })  \s
                                     }).then(res => res.json())
                                 },
-                            
                                 logout : function(){
-                                    localStorage.clear();
-                                    let x = window.location.pathname;
-                                    let arr = x.split("/")
                                     fetch(`${url}user/logout`,{
                                         method: "GET"
                                     })
                                     window.location.reload()
-                            
                                 }
-                               \s
                             }
-                            
 //                            requests.getHomeVideo()
 //                            requests.getPlayLists()
-                            
                            </script>
-                           
                         </body>
                     </html>
-                                        
                     """;
         }
         out.print(str);
